@@ -12,8 +12,48 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Plexxis Employees</h1>
-      {typeof employees === "undefined" ? <p>Loading...</p> : <p>{employees[0].id}</p>}
+      <div className="container">
+        <h1>Plexxis Employees</h1>
+        {typeof employees === "undefined" ? (
+          <p>Loading...</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Profession</th>
+                <th>Color</th>
+                <th>City</th>
+                <th>Branch</th>
+                <th>Assigned</th>
+              </tr>
+            </thead>
+            <tbody>
+              {employees.map((employee) => (
+                <tr key={employee.id}>
+                  <td>{employee.id}</td>
+                  <td>{employee.name}</td>
+                  <td>{employee.code}</td>
+                  <td>{employee.profession}</td>
+                  <td
+                    style={{
+                      backgroundColor: employee.color,
+                      color: employee.color ? "#ffffff" : "#000000",
+                    }}
+                  >
+                    {employee.color}
+                  </td>
+                  <td>{employee.city}</td>
+                  <td>{employee.branch}</td>
+                  <td>{employee.assigned ? "Yes" : "No"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
