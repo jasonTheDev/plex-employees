@@ -4,10 +4,10 @@ const pool = require("./data/db");
 const app = express();
 const employees = require("./data/employees.json");
 
-async function createDB() {
+async function createOrTruncateDB() {
   try {
     await pool.query(
-      `CREATE TABLE IF NOT EXISTS employee (
+      `CREATE TABLE IF NOT EXISTS employees (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255),
         code VARCHAR(50),
@@ -18,8 +18,21 @@ async function createDB() {
         assigned BOOLEAN)`
     );
     console.log("Employee table created or already exists.");
+    await pool.query("TRUNCATE TABLE employees");
   } catch (err) {
     console.error("Error creating employee table:", err.message);
+    process.exit(1);
+  }
+}
+
+async function addDataToDB() {
+  try {
+    for (const { name, code, profession, color, city, branch, assigned } of employees) {
+      pool.query(`INSERT INTO employees (name, code, profession, color, city, branch, assigned) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [name, code, profession, color, city, branch, assigned])
+    }
+    console.log("Table populated")
+  } catch (err) {
+    console.log("Error adding data to table: ", err.message);
     process.exit(1);
   }
 }
@@ -32,9 +45,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get("/api/employees", (req, res) => {
+app.get("/api/employees", async (req, res) => {
   console.log("GET: /api/employees");
-  res.status(200).json(employees);
+  try {
+    const result = await pool.query("SELECT * FROM employees");
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
 app.delete("/api/employees/:id", (req, res) => {
@@ -61,8 +80,8 @@ app.post("/api/employees", (req, res) => {
   res.status(200).json(new_employee);
 });
 
-createDB().then(() => {
-  app.listen(8080, () => console.log("Job Dispatch API running: http://localhost:8080"));
-}).catch(err => {
-  console.error("Failed to initialize database:", err.message);
+createOrTruncateDB().then(() => {
+  addDataToDB().then(() => {
+    app.listen(8080, () => console.log("Job Dispatch API running: http://localhost:8080"));
+  });
 });
