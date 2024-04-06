@@ -58,7 +58,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.get("/api/employees", async (req, res) => {
@@ -78,7 +78,7 @@ app.delete("/api/employees/:id", async (req, res) => {
     const { id } = req.params;
     const result = await pool.query("DELETE FROM employees WHERE id = $1 RETURNING *", [id]);
 
-    console.log(result);
+    // console.log(result);
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "Employee not found" });
     }
@@ -88,17 +88,24 @@ app.delete("/api/employees/:id", async (req, res) => {
   }
 });
 
-app.post("/api/employees", (req, res) => {
+app.post("/api/employees", async (req, res) => {
   console.log("POST: /api/employees");
-  const length = employees.length;
-  var new_id = 1;
-  if (length !== 0) {
-    // get the id of the last employee and add 1 to that
-    new_id = employees[length - 1].id + 1;
+  try {
+    const { name, code, profession, color, city, branch, assigned } = req.body;
+    console.log(`Body: ${[name, code, profession, color, city, branch, assigned]}`);
+
+    const result = await pool.query(
+      `INSERT INTO employees (
+        name, code, profession, color, city, branch, assigned)
+      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [name, code, profession, color, city, branch, assigned]
+    );
+    
+    //console.log(result)
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).send("Server error");
   }
-  const new_employee = { id: new_id, ...req.body };
-  employees.push(new_employee);
-  res.status(200).json(new_employee);
 });
 
 createEmployeesTable().then(() => {
