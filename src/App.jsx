@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from 'axios'
 import {
   useReactTable,
   flexRender,
@@ -9,11 +10,19 @@ import "./App.css";
 function App() {
   const [employees, setEmployees] = useState([]);
 
+  const fetchEmployees = async () => {
+    fetch("/api/employees")
+    .then((response) => response.json())
+    .then((employees) => setEmployees(employees));
+  }
+
   useEffect(() => {
-    fetch("http://localhost:8080/api/employees")
-      .then((response) => response.json())
-      .then((employees) => setEmployees(employees));
+    fetchEmployees();
   }, []);
+
+  const reloadComponent = () => {
+    fetchEmployees();
+  }
 
   const columns = [
     {
@@ -52,13 +61,18 @@ function App() {
       id: "delete",
       header: "Delete",
       cell: ({ row }) => (
-        <button onClick={() => deleteEmployee(row.original.id)}>Delete</button>
+        <button onClick={() => deleteEmployeeById(row.original.id)}>Delete</button>
       ),
     },
   ];
 
-  function deleteEmployee(row_id) {
-    console.log(`Row Id: ${row_id} ${typeof row_id}`);
+  function deleteEmployeeById(id) {
+    console.log(`Row Id: ${id} ${typeof id}`);
+    axios.delete(`/api/employees/${id}`)
+    .then((response) => {
+      console.log(`Response: ${response.data}`);
+      reloadComponent();
+    })
   }
 
   const table = useReactTable({
