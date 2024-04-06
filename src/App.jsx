@@ -20,10 +20,6 @@ function App() {
     fetchEmployees();
   }, []);
 
-  const reloadComponent = () => {
-    fetchEmployees();
-  }
-
   const columns = [
     {
       header: "ID",
@@ -66,13 +62,16 @@ function App() {
     },
   ];
 
-  function deleteEmployeeById(id) {
+  async function deleteEmployeeById(id) {
     console.log(`Row Id: ${id} ${typeof id}`);
     axios.delete(`/api/employees/${id}`)
     .then((response) => {
-      console.log(`Response: ${response.data}`);
-      reloadComponent();
+      console.log(response.data.message);
+      fetchEmployees();
     })
+    .catch((err) => {
+      console.log(err.message)
+    });
   }
 
   const table = useReactTable({
