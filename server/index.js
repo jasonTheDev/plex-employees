@@ -4,7 +4,7 @@ const pool = require("./data/db");
 const app = express();
 const employees = require("./data/employees.json");
 
-async function createOrTruncateDB() {
+async function createEmployeesTable() {
   try {
     await pool.query(
       `CREATE TABLE IF NOT EXISTS employees (
@@ -17,22 +17,38 @@ async function createOrTruncateDB() {
         branch VARCHAR(255),
         assigned BOOLEAN)`
     );
-    console.log("Employee table created or already exists.");
-    await pool.query("TRUNCATE TABLE employees");
+    console.log("Employees table created or already exists.");
   } catch (err) {
-    console.error("Error creating employee table:", err.message);
+    console.error("Error creating employees table:", err.message);
     process.exit(1);
   }
 }
 
-async function addDataToDB() {
+// for demo purposes
+async function truncateAndPopulateEmployeesTable() {
   try {
-    for (const { name, code, profession, color, city, branch, assigned } of employees) {
-      pool.query(`INSERT INTO employees (name, code, profession, color, city, branch, assigned) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [name, code, profession, color, city, branch, assigned])
+    // use 'RESTART IDENTITY' to keep id's consistent
+    await pool.query("TRUNCATE TABLE employees RESTART IDENTITY");
+    console.log("Table truncated successfully");
+    for (const {
+      name,
+      code,
+      profession,
+      color,
+      city,
+      branch,
+      assigned,
+    } of employees) {
+      pool.query(
+        `INSERT INTO employees (
+          name, code, profession, color, city, branch, assigned)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [name, code, profession, color, city, branch, assigned]
+      );
     }
-    console.log("Table populated")
+    console.log("Employees table populated successfully");
   } catch (err) {
-    console.log("Error adding data to table: ", err.message);
+    console.log("Error adding data to employees table: ", err.message);
     process.exit(1);
   }
 }
@@ -56,15 +72,20 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
-app.delete("/api/employees/:id", (req, res) => {
+app.delete("/api/employees/:id", async (req, res) => {
   console.log("DELETE: /api/employees/:id");
-  const { id } = req.params;
-  const match = employees.find((emp) => emp.id === Number(id));
-  if (typeof match === "undefined") {
-    res.status(404).json({ message: "Employee not found" });
+  try {
+    const { id } = req.params;
+    const result = await pool.query("DELETE FROM employees WHERE id = $1 RETURNING *", [id]);
+
+    console.log(result);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+    res.status(200).json({ message: "Employee deleted successfully" });
+  } catch (err) {
+    res.status(500).send("Server error");
   }
-  employees.filter((emp) => emp.id !== Number(id));
-  res.status(200).json({ message: "Employee deleted successfully" });
 });
 
 app.post("/api/employees", (req, res) => {
@@ -80,8 +101,10 @@ app.post("/api/employees", (req, res) => {
   res.status(200).json(new_employee);
 });
 
-createOrTruncateDB().then(() => {
-  addDataToDB().then(() => {
-    app.listen(8080, () => console.log("Job Dispatch API running: http://localhost:8080"));
+createEmployeesTable().then(() => {
+  truncateAndPopulateEmployeesTable().then(() => {
+    app.listen(8080, () =>
+      console.log("Job Dispatch API running: http://localhost:8080")
+    );
   });
 });
