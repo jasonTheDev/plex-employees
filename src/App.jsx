@@ -1,20 +1,74 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import {
+  useReactTable,
+  flexRender,
+  getCoreRowModel,
+} from "@tanstack/react-table";
 import "./App.css";
 
 function App() {
-  const [employees, setEmployees] = useState();
+  const data = [
+    { id: 1, name: "Joe" },
+    { id: 2, name: "Kim" },
+    { id: 3, name: "Kara" },
+  ];
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/employees")
-      .then((response) => response.json())
-      .then((employees) => setEmployees(employees));
-  }, []);
+  const columns = [
+    {
+      header: "ID",
+      accessorKey: "id",
+    },
+    {
+      header: "Name",
+      accessorKey: "name",
+    },
+  ];
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  // const [employees, setEmployees] = useState();
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/api/employees")
+  //     .then((response) => response.json())
+  //     .then((employees) => setEmployees(employees));
+  // }, []);
 
   return (
     <div className="App">
       <div className="container">
         <h1>Plexxis Employees</h1>
-        {typeof employees === "undefined" ? (
+        <table>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                </th>
+              ))}
+            </tr>
+          ))}
+
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* {typeof employees === "undefined" ? (
           <p>Loading...</p>
         ) : (
           <table>
@@ -52,7 +106,7 @@ function App() {
               ))}
             </tbody>
           </table>
-        )}
+        )} */}
       </div>
     </div>
   );
