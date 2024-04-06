@@ -1,0 +1,12 @@
+version: "3.2"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./container_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: plexxis123
+      POSTGRES_USER: plexxis-admin
+      POSTGRES_DB: plexxis-db
+    ports:
+      - 5432:5432
