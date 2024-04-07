@@ -74,7 +74,7 @@ function App() {
       fetchEmployees(); // reload employees
     })
     .catch((err) => {
-      console.error(err);
+      console.error(err.message);
     });
   }
 
