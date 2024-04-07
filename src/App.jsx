@@ -6,6 +6,9 @@ import {
   getCoreRowModel,
 } from "@tanstack/react-table";
 import "./App.css";
+import { EmployeeForm } from "./EmployeeForm";
+
+
 
 function App() {
   const [employees, setEmployees] = useState([]);
@@ -113,6 +116,7 @@ function App() {
             ))}
           </tbody>
         </table>
+        <EmployeeForm fetchEmployees={fetchEmployees}/>
       </div>
     </div>
   );
