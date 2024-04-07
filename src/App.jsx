@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import { useForm } from "react-hook-form";
+import axios from "axios";
 import {
   useReactTable,
   flexRender,
   getCoreRowModel,
 } from "@tanstack/react-table";
 import "./App.css";
-import { EmployeeForm } from "./EmployeeForm";
-import { EmployeeRowForm } from "./EmployeeRowForm";
-
-
+import { EmployeeInputRow } from "./EmployeeInputRow";
 
 function App() {
   const [employees, setEmployees] = useState([]);
 
   const fetchEmployees = async () => {
     fetch("/api/employees")
-    .then((response) => response.json())
-    .then((employees) => setEmployees(employees));
-  }
+      .then((response) => response.json())
+      .then((employees) => setEmployees(employees));
+  };
 
   useEffect(() => {
     fetchEmployees();
@@ -56,27 +54,30 @@ function App() {
     {
       header: "Assigned",
       accessorKey: "assigned",
-      cell: ({ row }) => (row.original.assigned? "Yes": "No")
+      cell: ({ row }) => (row.original.assigned ? "Yes" : "No"),
     },
     {
       id: "action",
       header: "",
       cell: ({ row }) => (
-        <button onClick={() => deleteEmployeeById(row.original.id)}>Delete</button>
+        <button onClick={() => deleteEmployeeById(row.original.id)}>
+          Delete
+        </button>
       ),
     },
   ];
 
   async function deleteEmployeeById(id) {
     // console.log(`Row Id: ${id} ${typeof id}`);
-    axios.delete(`/api/employees/${id}`)
-    .then((res) => {
-      console.log(res.data.message);
-      fetchEmployees(); // reload employees
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
+    axios
+      .delete(`/api/employees/${id}`)
+      .then((res) => {
+        console.log(res.data.message);
+        fetchEmployees(); // reload employees
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
   }
 
   const table = useReactTable({
@@ -89,44 +90,42 @@ function App() {
     <div className="App">
       <div className="container">
         <h1>Plexxis Employees</h1>
-
-        <table className="employee-table">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-            <EmployeeRowForm></EmployeeRowForm>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th>
-                Footer
-              </th>
-            </tr>
-          </tfoot>
-        </table>
-        <EmployeeForm fetchEmployees={fetchEmployees}/>
+        <form>
+          <table className="employee-table">
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th key={header.id}>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+              <EmployeeInputRow
+                fetchEmployees={fetchEmployees}
+                table={table}
+              ></EmployeeInputRow>
+            </tbody>
+          </table>
+        </form>
       </div>
     </div>
   );

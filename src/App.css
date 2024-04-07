@@ -21,7 +21,7 @@
 
 .employee-table th,
 .employee-table td {
-  padding: 4px 12px;
+  padding: 4px 10px;
 }
 
 .employee-table tbody tr {
@@ -32,6 +32,21 @@
   background-color: #f4f4f4;
 }
 
-.employee-table td:nth-of-type(2) {
-  min-width: 160px;
+.employee-table input:not([type='submit']),
+.employee-table select {
+  /* display: block; */
+  width: auto;
+  min-width: 20px;
+  padding: 4px 2px;
+}
+
+#spanned-row {
+  font-weight: bold;
+  border-top: 10px solid #dddddd;
+  background-color: #009880;
+  color: #ffffff;
+}
+
+#input-row td {
+  padding: 8px 2px;
 }
