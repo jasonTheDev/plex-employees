@@ -58,8 +58,8 @@ function App() {
       cell: ({ row }) => (row.original.assigned? "Yes": "No")
     },
     {
-      id: "delete",
-      header: "Delete",
+      id: "action",
+      header: "",
       cell: ({ row }) => (
         <button onClick={() => deleteEmployeeById(row.original.id)}>Delete</button>
       ),
@@ -89,7 +89,7 @@ function App() {
       <div className="container">
         <h1>Plexxis Employees</h1>
 
-        <table>
+        <table className="employee-table">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>

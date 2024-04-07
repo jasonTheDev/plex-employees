@@ -1,7 +1,37 @@
-.App {
+.App h1 {
   text-align: center;
+  color: #009880;
 }
 
-table {
-  margin: auto
+.employee-table {
+  border-collapse: collapse;
+  margin: 25px auto;
+  font-size: 0.9em;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.employee-table thead tr {
+  background-color: #009880;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 4px 12px;
+}
+
+.employee-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.employee-table tbody tr:nth-of-type(even) {
+  background-color: #f4f4f4;
+}
+
+.employee-table td:nth-of-type(2) {
+  min-width: 160px;
 }
