@@ -7,7 +7,7 @@ const getEmployees = async (req, res) => {
     res.status(200).json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -26,10 +26,10 @@ const createEmployee = async (req, res) => {
       [name, code, profession, color, city, branch, assigned]
     );
 
-    res.status(200).json(result.rows[0]);
+    res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -46,10 +46,11 @@ const deleteEmployee = async (req, res) => {
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "Employee not found" });
     }
+
     res.status(200).json({ message: "Employee deleted successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

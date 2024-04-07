@@ -15,12 +15,15 @@ export const EmployeeForm = ({ fetchEmployees }) => {
     }
   });
 
-  async function addEmployee(employee) {
+  async function createEmployee(employee) {
     axios
       .post("/api/employees", employee)
       .then((res) => {
-        console.log(res);
-        fetchEmployees();
+        console.log("Employee created successfully");
+        fetchEmployees(); // reload employees
+      })
+      .catch((err) => {
+        console.error(err);
       })
 
   }
@@ -28,8 +31,8 @@ export const EmployeeForm = ({ fetchEmployees }) => {
     <form
       onSubmit={handleSubmit((data) => {
         data.assigned = data.assigned === "true";
-        console.log(data);
-        addEmployee(data);
+        // console.log(data);
+        createEmployee(data);
       })}>
 
       <label htmlFor="name">Name</label>

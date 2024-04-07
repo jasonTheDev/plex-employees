@@ -67,14 +67,14 @@ function App() {
   ];
 
   async function deleteEmployeeById(id) {
-    console.log(`Row Id: ${id} ${typeof id}`);
+    // console.log(`Row Id: ${id} ${typeof id}`);
     axios.delete(`/api/employees/${id}`)
-    .then((response) => {
-      console.log(response.data.message);
-      fetchEmployees();
+    .then((res) => {
+      console.log(res.data.message);
+      fetchEmployees(); // reload employees
     })
     .catch((err) => {
-      console.log(err.message)
+      console.error(err);
     });
   }
 
