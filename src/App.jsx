@@ -55,6 +55,7 @@ function App() {
     {
       header: "Assigned",
       accessorKey: "assigned",
+      cell: ({ row }) => (row.original.assigned? "Yes": "No")
     },
     {
       id: "delete",

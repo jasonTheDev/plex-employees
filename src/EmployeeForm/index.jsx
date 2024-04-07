@@ -27,6 +27,7 @@ export const EmployeeForm = ({ fetchEmployees }) => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
+        data.assigned = data.assigned === "true";
         console.log(data);
         addEmployee(data);
       })}>
@@ -50,8 +51,10 @@ export const EmployeeForm = ({ fetchEmployees }) => {
       <input {...register("branch", { required: true })} placeholder="Branch" id="branch"/>
 
       <label htmlFor="assigned">Assigned</label>
-      <input {...register("assigned")} placeholder="Assigned" id="assigned"/>
-
+      <select {...register("assigned")} id="assigned">
+        <option value="false">No</option>
+        <option value="true">Yes</option>
+      </select>
       <input type="submit" />
     </form>
   );
