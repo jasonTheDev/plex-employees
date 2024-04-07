@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-table";
 import "./App.css";
 import { EmployeeForm } from "./EmployeeForm";
+import { EmployeeRowForm } from "./EmployeeRowForm";
 
 
 
@@ -115,7 +116,15 @@ function App() {
                 ))}
               </tr>
             ))}
+            <EmployeeRowForm></EmployeeRowForm>
           </tbody>
+          <tfoot>
+            <tr>
+              <th>
+                Footer
+              </th>
+            </tr>
+          </tfoot>
         </table>
         <EmployeeForm fetchEmployees={fetchEmployees}/>
       </div>
