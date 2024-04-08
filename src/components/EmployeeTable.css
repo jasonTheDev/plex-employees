@@ -32,3 +32,17 @@ table input:not([type='submit']),
 table select {
   padding: 4px 2px;
 }
+
+.delete-button {
+  font-weight: bold;
+  border-radius: 100%;
+  background-color: rgb(255, 61, 61);
+  border: 2px solid rgb(255, 61, 61);
+  color: #ffffff;
+}
+
+.delete-button:hover {
+  background-color: rgb(255, 6, 6);
+  border: 2px solid rgb(255, 6, 6);
+  cursor: pointer;
+}

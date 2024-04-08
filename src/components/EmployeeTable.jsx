@@ -46,7 +46,7 @@ export const EmployeeTable = ({ employees, loadEmployees }) => {
       id: "action",
       header: "",
       cell: ({ row }) => (
-        <button className="delete-button" onClick={() => handleDelete(row.original.id)}>Delete</button>
+        <button className="delete-button" onClick={() => handleDelete(row.original.id)}>X</button>
       ),
     },
   ];
