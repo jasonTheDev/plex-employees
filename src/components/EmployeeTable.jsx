@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-table";
 import { EmployeeInputRow } from "./EmployeeInputRow";
 import { deleteEmployeeById } from "../api/employee.api";
+import "./EmployeeTable.css"
 
 export const EmployeeTable = ({ employees, loadEmployees }) => {
   const columns = [
@@ -45,7 +46,7 @@ export const EmployeeTable = ({ employees, loadEmployees }) => {
       id: "action",
       header: "",
       cell: ({ row }) => (
-        <button onClick={() => handleDelete(row.original.id)}>Delete</button>
+        <button className="delete-button" onClick={() => handleDelete(row.original.id)}>Delete</button>
       ),
     },
   ];
@@ -65,7 +66,7 @@ export const EmployeeTable = ({ employees, loadEmployees }) => {
   });
 
   return (
-    <table className="employee-table">
+    <table>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>

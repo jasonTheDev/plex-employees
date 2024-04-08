@@ -1,0 +1,34 @@
+table {
+  text-align: left;
+  border-collapse: collapse;
+  margin: 25px auto;
+  font-size: 0.9em;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+table thead tr {
+  background-color: #009880;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+table th,
+table td {
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+  background-color: #f4f4f4;
+}
+
+table input:not([type='submit']),
+table select {
+  padding: 4px 2px;
+}

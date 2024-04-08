@@ -1,0 +1,20 @@
+/* override standard td padding */
+.input-td {
+  padding: 8px 2px !important;
+}
+
+.input-td input {
+ display: block;
+}
+
+.form-error {
+  color: red;
+  font-size: smaller;
+}
+
+#spanned-row {
+  font-weight: bold;
+  border-top: 10px solid #dddddd;
+  background-color: #009880;
+  color: #ffffff;
+}
