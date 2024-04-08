@@ -21,7 +21,8 @@
 
 .employee-table th,
 .employee-table td {
-  padding: 4px 10px;
+  padding: 8px 10px;
+  vertical-align: top;
 }
 
 .employee-table tbody tr {
@@ -34,10 +35,21 @@
 
 .employee-table input:not([type='submit']),
 .employee-table select {
-  /* display: block; */
-  width: auto;
-  min-width: 20px;
   padding: 4px 2px;
+}
+
+/* override standard td padding */
+.input-td {
+  padding: 8px 2px !important;
+}
+
+.input-td input {
+ display: block;
+}
+
+.form-error {
+  color: red;
+  font-size: smaller;
 }
 
 #spanned-row {
@@ -47,6 +59,3 @@
   color: #ffffff;
 }
 
-#input-row td {
-  padding: 8px 2px;
-}
