@@ -1,10 +1,16 @@
+input,
+select {
+  border: 2px solid #dddddd;
+  border-radius: 2px;
+}
+
 /* override standard td padding */
 .input-td {
   padding: 8px 2px !important;
 }
 
 .input-td input {
- display: block;
+  display: block;
 }
 
 .form-error {
