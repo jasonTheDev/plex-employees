@@ -39,7 +39,7 @@ export const EmployeeUpdateRow = ({ loadEmployees, table, employees }) => {
       setValue("color", "");
       setValue("city", "");
       setValue("branch", "");
-      setValue("assigned", "");
+      setValue("assigned", false);
     }
 
     const employeesWithId = employees.filter(emp => emp.id === Number(watchedId));

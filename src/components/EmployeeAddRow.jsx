@@ -8,18 +8,19 @@ export const EmployeeAddRow = ({ loadEmployees, table }) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: "Jason Kepler",
-      code: "F100",
-      profession: "Runner",
-      color: "green",
-      city: "Victoria",
-      branch: "Tech",
-      assigned: false,
-    },
-  });
+  } = useForm();
+
+  const setInputsToEmpty = () => {
+    setValue("name", "");
+    setValue("code", "");
+    setValue("profession", "");
+    setValue("color", "");
+    setValue("city", "");
+    setValue("branch", "");
+    setValue("assigned", false);
+  }
 
   const prepareEmployeeData = (data) => {
     data.assigned = data.assigned === "true";
@@ -33,6 +34,7 @@ export const EmployeeAddRow = ({ loadEmployees, table }) => {
     const success = await createEmployee(data);
     if (success) {
       loadEmployees();
+      setInputsToEmpty();
     }
   }
 
