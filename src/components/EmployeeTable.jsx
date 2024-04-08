@@ -99,6 +99,7 @@ export const EmployeeTable = ({ employees, loadEmployees }) => {
         <EmployeeUpdateRow
           loadEmployees={loadEmployees}
           table={table}
+          employees={employees}
         ></EmployeeUpdateRow>
       </tbody>
     </table>

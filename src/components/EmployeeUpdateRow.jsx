@@ -1,26 +1,54 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { updateEmployee } from "../api/employee.api";
 import { FormInput } from "./FormInput";
-import "./EmployeeInputRow.css"
+import "./EmployeeRow.css"
 
 
-export const EmployeeUpdateRow = ({ loadEmployees, table }) => {
+export const EmployeeUpdateRow = ({ loadEmployees, table, employees }) => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      id: 2,
-      name: "Jason Kepler",
-      code: "F100",
-      profession: "Runner",
-      color: "green",
-      city: "Victoria",
-      branch: "Tech",
-      assigned: false,
-    },
+      id: 1
+    }
   });
+
+  const watchedId = watch("id");
+
+  // check if input id matches an employee id
+  useEffect(() => {
+    const setInputsToEmployee = (employee) => {
+      setValue("name", employee.name, { shouldValidate: true });
+      setValue("code", employee.code, { shouldValidate: true });
+      setValue("profession", employee.profession, { shouldValidate: true });
+      setValue("color", employee.color);
+      setValue("city", employee.city, { shouldValidate: true });
+      setValue("branch", employee.branch, { shouldValidate: true });
+      setValue("assigned", employee.assigned);
+    }
+  
+    const setInputsToEmpty = () => {
+      setValue("name", "");
+      setValue("code", "");
+      setValue("profession", "");
+      setValue("color", "");
+      setValue("city", "");
+      setValue("branch", "");
+      setValue("assigned", "");
+    }
+
+    const employeesWithId = employees.filter(emp => emp.id === Number(watchedId));
+    if (employeesWithId.length === 1) {
+      setInputsToEmployee(employeesWithId[0])
+    } else {
+      setInputsToEmpty();
+    }
+  }, [watchedId, employees]);
 
   const prepareEmployeeData = (data) => {
     data.assigned = data.assigned === "true";
@@ -48,7 +76,7 @@ export const EmployeeUpdateRow = ({ loadEmployees, table }) => {
         <FormInput
           name="id"
           placeholder="ID"
-          size="2"
+          type="number"
           register={register}
           errors={errors}
           validator={{ required: "Required", min: 1 }}

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { createEmployee } from "../api/employee.api";
 import { FormInput } from "./FormInput";
-import "./EmployeeInputRow.css"
+import "./EmployeeRow.css"
 
 
 export const EmployeeAddRow = ({ loadEmployees, table }) => {
