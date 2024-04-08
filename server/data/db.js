@@ -10,17 +10,16 @@ const pool = new Pool({
 });
 
 async function createEmptyEmployeesTable() {
-  const createQuery = `
-    CREATE TABLE IF NOT EXISTS employees (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    code VARCHAR(50),
-    profession VARCHAR(255),
-    color VARCHAR(50),
-    city VARCHAR(255),
-    branch VARCHAR(255),
-    assigned BOOLEAN)`
-    
+  const createQuery = `CREATE TABLE IF NOT EXISTS employees (
+                       id SERIAL PRIMARY KEY,
+                       name VARCHAR(255),
+                       code VARCHAR(50),
+                       profession VARCHAR(255),
+                       color VARCHAR(50),
+                       city VARCHAR(255),
+                       branch VARCHAR(255),
+                       assigned BOOLEAN)`;
+
   try {
     await pool.query(createQuery);
     console.log("Employees table created or already exists.");
