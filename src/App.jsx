@@ -4,7 +4,7 @@ import { fetchEmployees } from "./api/employee.api";
 import "./App.css";
 
 const App = () => {
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState();
 
   const loadEmployees = async () => {
     const employees = await fetchEmployees();
@@ -21,7 +21,11 @@ const App = () => {
     <div className="App">
       <div className="container">
         <h1>Plexxis Employees</h1>
-        <EmployeeTable employees={employees} loadEmployees={loadEmployees} />
+        {typeof employees === "undefined" ? (
+          <span className="loading">Loading...</span>
+        ) : (
+          <EmployeeTable employees={employees} loadEmployees={loadEmployees} />
+        )}
       </div>
     </div>
   );

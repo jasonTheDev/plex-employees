@@ -1,9 +1,19 @@
 .App h1 {
-  text-align: center;
   color: #009880;
 }
 
+.loading {
+  color: #009880;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.container {
+  text-align: center;
+}
+
 .employee-table {
+  text-align: left;
   border-collapse: collapse;
   margin: 25px auto;
   font-size: 0.9em;
@@ -15,7 +25,6 @@
 .employee-table thead tr {
   background-color: #009880;
   color: #ffffff;
-  text-align: left;
   font-weight: bold;
 }
 
