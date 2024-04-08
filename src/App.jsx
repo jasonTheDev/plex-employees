@@ -8,7 +8,7 @@ import "./App.css";
 import { EmployeeInputRow } from "./EmployeeInputRow";
 import { fetchEmployees, deleteEmployeeById } from "./api/employee.api"
 
-function App() {
+const App = () => {
   const [employees, setEmployees] = useState([]);
 
   const loadEmployees = async () => {
@@ -67,7 +67,7 @@ function App() {
     },
   ];
 
-  async function handleDelete(id) {
+  const handleDelete = async (id) => {
     const success = await deleteEmployeeById(id);
     console.log("success", success);
     if (success) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function fetchEmployees() {
+const fetchEmployees = async () => {
   try {
     const res = await axios.get("/api/employees");
     console.log("Employees fetched successfully");
@@ -11,7 +11,7 @@ async function fetchEmployees() {
   }
 }
 
-async function createEmployee(employee) {
+const createEmployee = async (employee) => {
   try {
     const res = await axios.post("/api/employees", employee);
     console.log("Employee created successfully");
@@ -22,7 +22,7 @@ async function createEmployee(employee) {
   }
 }
 
-async function deleteEmployeeById(id) {
+const deleteEmployeeById = async (id) => {
   try {
     const res = await axios.delete(`/api/employees/${id}`)
     console.log(res.data.message);

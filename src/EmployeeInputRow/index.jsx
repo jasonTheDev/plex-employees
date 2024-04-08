@@ -23,6 +23,7 @@ const FormInput = ({
   </td>
 );
 
+
 export const EmployeeInputRow = ({ loadEmployees, table }) => {
   const {
     register,
@@ -47,7 +48,7 @@ export const EmployeeInputRow = ({ loadEmployees, table }) => {
     }
   }
 
-  async function handleAdd(data) {
+  const handleAdd = async (data) => {
     prepareEmployeeData(data);
     const success = await createEmployee(data);
     if (success) {
