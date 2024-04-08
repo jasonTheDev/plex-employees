@@ -3,7 +3,8 @@ import {
   flexRender,
   getCoreRowModel,
 } from "@tanstack/react-table";
-import { EmployeeInputRow } from "./EmployeeInputRow";
+import { EmployeeAddRow } from "./EmployeeAddRow";
+import { EmployeeUpdateRow } from "./EmployeeUpdateRow";
 import { deleteEmployeeById } from "../api/employee.api";
 import "./EmployeeTable.css"
 
@@ -91,10 +92,14 @@ export const EmployeeTable = ({ employees, loadEmployees }) => {
             ))}
           </tr>
         ))}
-        <EmployeeInputRow
+        <EmployeeAddRow
           loadEmployees={loadEmployees}
           table={table}
-        ></EmployeeInputRow>
+        ></EmployeeAddRow>
+        <EmployeeUpdateRow
+          loadEmployees={loadEmployees}
+          table={table}
+        ></EmployeeUpdateRow>
       </tbody>
     </table>
   );

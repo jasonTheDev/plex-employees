@@ -28,7 +28,7 @@ Then in your favorite browser, navigate to http://localhost:3000
 
 - [x] Use a relational database
 - [ ] UI mechanisms to edit/update employee data
-- [ ] Add API endpoint to update employee data
+- [x] Add API endpoint to update employee data
 - [x] Use React Table
 
 ## About

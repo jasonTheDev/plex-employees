@@ -1,37 +1,17 @@
 import { useForm } from "react-hook-form";
-import { createEmployee } from "../api/employee.api";
+import { updateEmployee } from "../api/employee.api";
+import { FormInput } from "./FormInput";
 import "./EmployeeInputRow.css"
 
 
-const FormInput = ({
-  name,
-  placeholder,
-  size = "15",
-  register,
-  errors,
-  validator={ required: "Required field" },
-}) => (
-  <td className="input-td">
-    <input
-      {...register(name, validator)}
-      size={size}
-      placeholder={placeholder}
-      id={name}
-    />
-    {errors[name] && (
-      <span className="form-error"> {errors[name].message}</span>
-    )}
-  </td>
-);
-
-
-export const EmployeeInputRow = ({ loadEmployees, table }) => {
+export const EmployeeUpdateRow = ({ loadEmployees, table }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      id: 2,
       name: "Jason Kepler",
       code: "F100",
       profession: "Runner",
@@ -49,9 +29,9 @@ export const EmployeeInputRow = ({ loadEmployees, table }) => {
     }
   }
 
-  const handleAdd = async (data) => {
+  const handleUpdate = async (data) => {
     prepareEmployeeData(data);
-    const success = await createEmployee(data);
+    const success = await updateEmployee(data);
     if (success) {
       loadEmployees();
     }
@@ -61,11 +41,18 @@ export const EmployeeInputRow = ({ loadEmployees, table }) => {
     <>
       <tr id="spanned-row">
         <td colSpan={table.getCenterLeafColumns().length} align="center">
-          Add Employee
+          Update Employee
         </td>
       </tr>
       <tr>
-        <td>-</td>
+        <FormInput
+          name="id"
+          placeholder="ID"
+          size="2"
+          register={register}
+          errors={errors}
+          validator={{ required: "Required", min: 1 }}
+        />
         <FormInput
           name="name"
           placeholder="Name"
@@ -120,10 +107,10 @@ export const EmployeeInputRow = ({ loadEmployees, table }) => {
           <button
             className="submit-button"
             onClick={handleSubmit((data) => {
-              handleAdd(data);
+              handleUpdate(data);
             })}
           >
-            Add
+            Update
           </button>
         </td>
       </tr>

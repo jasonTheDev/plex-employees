@@ -24,7 +24,7 @@ const createEmployee = async (employee) => {
 
 const deleteEmployeeById = async (id) => {
   try {
-    const res = await axios.delete(`/api/employees/${id}`)
+    const res = await axios.delete(`/api/employees/${id}`);
     console.log(res.data.message);
     return true
   } catch (err) {
@@ -33,4 +33,15 @@ const deleteEmployeeById = async (id) => {
   }
 }
 
-export { fetchEmployees, createEmployee, deleteEmployeeById };
+const updateEmployee = async ({ id, ...employee }) => {
+  try {
+    const res = await axios.put(`/api/employees/${id}`, employee);
+    console.log("Employee updated successfully");
+    return res.data;
+  } catch (err) {
+    console.error(err.message);
+    return null;
+  }
+}
+
+export { fetchEmployees, createEmployee, deleteEmployeeById, updateEmployee };
