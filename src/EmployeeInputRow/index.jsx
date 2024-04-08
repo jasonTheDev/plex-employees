@@ -1,21 +1,43 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
+
+const FormInput = ({
+  name,
+  placeholder,
+  size = "15",
+  register,
+  errors,
+  validator={ required: "Required field" },
+}) => (
+  <td className="input-td">
+    <input
+      {...register(name, validator)}
+      size={size}
+      placeholder={placeholder}
+      id={name}
+    />
+    {errors[name] && (
+      <span className="form-error"> {errors[name].message}</span>
+    )}
+  </td>
+);
+
 export const EmployeeInputRow = ({ fetchEmployees, table }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    // defaultValues: {
-    //   name: "Jason Kepler",
-    //   code: "F100",
-    //   profession: "Runner",
-    //   color: "green",
-    //   city: "Victoria",
-    //   branch: "Tech",
-    //   assigned: false,
-    // },
+    defaultValues: {
+      name: "Jason Kepler",
+      code: "F100",
+      profession: "Runner",
+      color: "green",
+      city: "Victoria",
+      branch: "Tech",
+      assigned: false,
+    },
   });
 
   async function createEmployee(employee) {
@@ -30,6 +52,14 @@ export const EmployeeInputRow = ({ fetchEmployees, table }) => {
       });
   }
 
+  const prepareEmployeeData = (data) => {
+    data.assigned = data.assigned === "true";
+    if (data.color === "") {
+      data.color = "green";
+    }
+    return data;
+  }
+
   return (
     <>
       <tr id="spanned-row">
@@ -39,59 +69,50 @@ export const EmployeeInputRow = ({ fetchEmployees, table }) => {
       </tr>
       <tr>
         <td>-</td>
-        <td className="input-td">
-          <input
-            {...register("name", { required: "Required field" })}
-            placeholder="Name"
-            id="name"
-          />
-          {errors.name && <span className="form-error"> {errors.name.message}</span>}
-        </td>
-        <td className="input-td">
-          <input
-            {...register("code", { required: "Required field" })}
-            size="10"
-            placeholder="Code"
-            id="code"
-          />
-          {errors.code && <span className="form-error"> {errors.code.message}</span>}
-        </td>
-        <td className="input-td">
-          <input
-            {...register("profession", { required: "Required field" })}
-            size="15"
-            placeholder="Profession"
-            id="profession"
-          />
-          {errors.profession && <span className="form-error"> {errors.profession.message}</span>}
-        </td>
-        <td className="input-td">
-          <input
-            {...register("color", { required: "Required field" })}
-            size="10"
-            placeholder="Color"
-            id="color"
-          />
-          {errors.color && <span className="form-error"> {errors.color.message}</span>}
-        </td>
-        <td className="input-td">
-          <input
-            {...register("city", { required: "Required field" })}
-            size="15"
-            placeholder="City"
-            id="city"
-          />
-          {errors.city && <span className="form-error"> {errors.city.message}</span>}
-        </td>
-        <td className="input-td">
-          <input
-            {...register("branch", { required: "Required field" })}
-            size="15"
-            placeholder="Branch"
-            id="branch"
-          />
-          {errors.branch && <span className="form-error"> {errors.branch.message}</span>}
-        </td>
+        <FormInput
+          name="name"
+          placeholder="Name"
+          size="20"
+          register={register}
+          errors={errors}
+        />
+        <FormInput
+          name="code"
+          placeholder="Code"
+          size="10"
+          register={register}
+          errors={errors}
+          validator={{ required: "Required field", maxLength: 50 }}
+        />
+        <FormInput
+          name="profession"
+          placeholder="Profession"
+          size="15"
+          register={register}
+          errors={errors}
+        />
+        <FormInput
+          name="color"
+          placeholder="Color"
+          size="10"
+          register={register}
+          errors={errors}
+          validator={{ maxLength: 50 }}
+        />
+        <FormInput
+          name="city"
+          placeholder="City"
+          size="15"
+          register={register}
+          errors={errors}
+        />
+        <FormInput
+          name="branch"
+          placeholder="Branch"
+          size="15"
+          register={register}
+          errors={errors}
+        />
         <td className="input-td">
           <select {...register("assigned")} id="assigned">
             <option value="false">No</option>
@@ -101,7 +122,7 @@ export const EmployeeInputRow = ({ fetchEmployees, table }) => {
         <td>
           <button
             onClick={handleSubmit((data) => {
-              data.assigned = data.assigned === "true";
+              data = prepareEmployeeData(data);
               createEmployee(data);
             })}
           >
