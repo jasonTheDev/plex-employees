@@ -1,5 +1,5 @@
 const { Pool } = require("pg");
-const employees = require("./employees.json")
+const employees = require("./employees.json");
 
 const pool = new Pool({
   host: "localhost",
@@ -8,7 +8,6 @@ const pool = new Pool({
   password: "plexxis123",
   port: 5432,
 });
-
 
 async function createEmptyEmployeesTable() {
   try {
@@ -36,26 +35,26 @@ async function createEmptyEmployeesTable() {
 
 // add employees to db for demo purposes
 async function populateEmployeesTable() {
+  const insertQuery = `INSERT INTO employees (name, code, profession, color, city, branch, assigned)
+                       VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+
   try {
-    for (const {
-      name,
-      code,
-      profession,
-      color,
-      city,
-      branch,
-      assigned,
-    } of employees) {
-      pool.query(
-        `INSERT INTO employees (
-          name, code, profession, color, city, branch, assigned)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [name, code, profession, color, city, branch, assigned]
-      );
-    }
+    const promises = employees.map((employee) =>
+      pool.query(insertQuery, [
+        employee.name,
+        employee.code,
+        employee.profession,
+        employee.color,
+        employee.city,
+        employee.branch,
+        employee.assigned,
+      ])
+    );
+
+    await Promise.all(promises);
     console.log("Employees table populated successfully");
   } catch (err) {
-    console.log("Error adding data to employees table: ", err.message);
+    console.error("Error adding data to employees table:", err.message);
     process.exit(1);
   }
 }
