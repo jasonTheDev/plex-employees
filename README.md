@@ -1,6 +1,6 @@
 # Plex Employees
 
-This project includes a React front-end that uses the **@tanstack/react-table** module, and an **Express** back-end connected to a **Postgres** database. The Postgres service is defined in the [docker-compose.yml](/docker-compose.yaml) file in the root of the project, so no need to install or configure it manually.
+This project includes a React front-end that uses the **@tanstack/react-table** module, and an **Express** back-end connected to a **Postgres** database. The Postgres service is defined in the [docker-compose.yml](/docker-compose.yml) file in the root of the project, so no need to install or configure it manually.
 
 ## To Run
 
@@ -43,7 +43,7 @@ In general, my process for building the app looked something like this:
 
 I took an iterative approach to building the app. I started with the API for fetching employees, which I testing with the API testing tool Insomnia, before connecting it to the front-end. After starting to build the DELETE and CREATE endpoints, I realized that integrating a database would more easily be done now, rather than after implementing all the methods using an array for storage. So I decided to use a database early in the project.
 
-After doing some research, I decided to use Postgres because it has easy integration with node via a module called pg, and lots of documentation. After more research I figured out how to configure and run the database with a [docker-compose.yml](/docker-compose.yaml) file, making it easy for anyone else that might want to test the app.
+After doing some research, I decided to use Postgres because it has easy integration with node via a module called pg, and lots of documentation. After more research I figured out how to configure and run the database with a [docker-compose.yml](/docker-compose.yml) file, making it easy for anyone else that might want to test the app.
 
 After getting some basic functionality for adding and deleting employees, I refactored the server into [/controllers](/server/controllers) and [/routes](/server/routes) folders, and moved the methods for setting up the database into [db.js](/server/data/db.js) to better structure the project.
 
