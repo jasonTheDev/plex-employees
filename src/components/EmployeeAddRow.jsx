@@ -19,7 +19,7 @@ export const EmployeeAddRow = ({ loadEmployees, table }) => {
     setValue("color", "");
     setValue("city", "");
     setValue("branch", "");
-    setValue("assigned", false);
+    setValue("assigned", "false");
   }
 
   const prepareEmployeeData = (data) => {

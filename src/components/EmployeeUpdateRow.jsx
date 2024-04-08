@@ -20,28 +20,28 @@ export const EmployeeUpdateRow = ({ loadEmployees, table, employees }) => {
 
   const watchedId = watch("id");
 
+  const setInputsToEmployee = (employee) => {
+    setValue("name", employee.name, { shouldValidate: true });
+    setValue("code", employee.code, { shouldValidate: true });
+    setValue("profession", employee.profession, { shouldValidate: true });
+    setValue("color", employee.color);
+    setValue("city", employee.city, { shouldValidate: true });
+    setValue("branch", employee.branch, { shouldValidate: true });
+    setValue("assigned", employee.assigned ? "true": "false");
+  }
+
+  const setInputsToEmpty = () => {
+    setValue("name", "");
+    setValue("code", "");
+    setValue("profession", "");
+    setValue("color", "");
+    setValue("city", "");
+    setValue("branch", "");
+    setValue("assigned", "false");
+  }
+
   // check if input id matches an employee id
   useEffect(() => {
-    const setInputsToEmployee = (employee) => {
-      setValue("name", employee.name, { shouldValidate: true });
-      setValue("code", employee.code, { shouldValidate: true });
-      setValue("profession", employee.profession, { shouldValidate: true });
-      setValue("color", employee.color);
-      setValue("city", employee.city, { shouldValidate: true });
-      setValue("branch", employee.branch, { shouldValidate: true });
-      setValue("assigned", employee.assigned);
-    }
-  
-    const setInputsToEmpty = () => {
-      setValue("name", "");
-      setValue("code", "");
-      setValue("profession", "");
-      setValue("color", "");
-      setValue("city", "");
-      setValue("branch", "");
-      setValue("assigned", false);
-    }
-
     const employeesWithId = employees.filter(emp => emp.id === Number(watchedId));
     if (employeesWithId.length === 1) {
       setInputsToEmployee(employeesWithId[0])
