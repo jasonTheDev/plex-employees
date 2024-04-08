@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import axios from "axios";
 import {
   useReactTable,
   flexRender,
@@ -8,6 +6,7 @@ import {
 } from "@tanstack/react-table";
 import "./App.css";
 import { EmployeeInputRow } from "./EmployeeInputRow";
+import { deleteEmployeeById } from "./api/employee.api"
 
 function App() {
   const [employees, setEmployees] = useState([]);
@@ -60,24 +59,19 @@ function App() {
       id: "action",
       header: "",
       cell: ({ row }) => (
-        <button onClick={() => deleteEmployeeById(row.original.id)}>
+        <button onClick={() => handleDelete(row.original.id)}>
           Delete
         </button>
       ),
     },
   ];
 
-  async function deleteEmployeeById(id) {
-    // console.log(`Row Id: ${id} ${typeof id}`);
-    axios
-      .delete(`/api/employees/${id}`)
-      .then((res) => {
-        console.log(res.data.message);
-        fetchEmployees(); // reload employees
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
+  async function handleDelete(id) {
+    const success = await deleteEmployeeById(id);
+    console.log("success", success);
+    if (success) {
+      fetchEmployees();
+    }
   }
 
   const table = useReactTable({

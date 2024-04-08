@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { createEmployee } from "../api/employee.api";
 
 
 const FormInput = ({
@@ -40,24 +40,19 @@ export const EmployeeInputRow = ({ fetchEmployees, table }) => {
     },
   });
 
-  async function createEmployee(employee) {
-    axios
-      .post("/api/employees", employee)
-      .then((res) => {
-        console.log("Employee created successfully");
-        fetchEmployees(); // reload employees
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
-  }
-
   const prepareEmployeeData = (data) => {
     data.assigned = data.assigned === "true";
     if (data.color === "") {
       data.color = "green";
     }
-    return data;
+  }
+
+  async function handleAdd(data) {
+    prepareEmployeeData(data);
+    const success = await createEmployee(data);
+    if (success) {
+      fetchEmployees();
+    }
   }
 
   return (
@@ -122,8 +117,7 @@ export const EmployeeInputRow = ({ fetchEmployees, table }) => {
         <td>
           <button
             onClick={handleSubmit((data) => {
-              data = prepareEmployeeData(data);
-              createEmployee(data);
+              handleAdd(data);
             })}
           >
             Submit
