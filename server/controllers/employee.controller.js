@@ -3,7 +3,7 @@ const { pool } = require("../data/db");
 const getEmployees = async (req, res) => {
   console.log("GET: /api/employees");
 
-  const selectQuery = "SELECT * FROM employees";
+  const selectQuery = "SELECT * FROM employees ORDER BY id";
   
   try {
     const result = await pool.query(selectQuery);
@@ -52,8 +52,31 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
+const updateEmployee = async (req, res) => {
+  console.log("PUT: /api/employees/:id", { body: req.body });
+
+  const { name, code, profession, color, city, branch, assigned } = req.body;
+  const { id } = req.params;
+  const queryParams = [ name, code, profession, color, city, branch, assigned, id];
+  const updateQuery = `UPDATE employees
+                        SET name = $1, code = $2, profession = $3, color = $4, city = $5, branch = $6, assigned = $7
+                        WHERE id = $8
+                        RETURNING *`
+  try {
+    const result = await pool.query(updateQuery, queryParams);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   getEmployees,
   createEmployee,
   deleteEmployee,
+  updateEmployee,
 };
