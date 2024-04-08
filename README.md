@@ -47,5 +47,5 @@ After doing some research, I decided to use Postgres because it has easy integra
 
 After getting some basic functionality for adding and deleting employees, I refactored the server into [/controllers](/server/controllers) and [/routes](/server/routes) folders, and moved the methods for setting up the database into [db.js](/server/data/db.js) to better structure the project.
 
-On the front-end I used Tanstack table for building the table and react-hook-form for collecting employee inputs. I would have preferred to have employee data be edited in place rather than having a separate row, but settled on this method.
+On the front-end I used Tanstack table for building the table, react-hook-form for collecting employee inputs and css for styling. I would have preferred to have employee data be edited in place rather than having a separate row, but settled on this method.
 
