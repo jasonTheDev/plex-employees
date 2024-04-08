@@ -23,7 +23,7 @@ const FormInput = ({
   </td>
 );
 
-export const EmployeeInputRow = ({ fetchEmployees, table }) => {
+export const EmployeeInputRow = ({ loadEmployees, table }) => {
   const {
     register,
     handleSubmit,
@@ -51,7 +51,7 @@ export const EmployeeInputRow = ({ fetchEmployees, table }) => {
     prepareEmployeeData(data);
     const success = await createEmployee(data);
     if (success) {
-      fetchEmployees();
+      loadEmployees();
     }
   }
 

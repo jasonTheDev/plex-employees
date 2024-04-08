@@ -1,5 +1,16 @@
 import axios from "axios";
 
+async function fetchEmployees() {
+  try {
+    const res = await axios.get("/api/employees");
+    console.log("Employees fetched successfully");
+    return res.data;
+  } catch (err) {
+    console.error(err.message);
+    return null;
+  }
+}
+
 async function createEmployee(employee) {
   try {
     const res = await axios.post("/api/employees", employee);
@@ -22,4 +33,4 @@ async function deleteEmployeeById(id) {
   }
 }
 
-export { createEmployee, deleteEmployeeById };
+export { fetchEmployees, createEmployee, deleteEmployeeById };

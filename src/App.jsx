@@ -6,19 +6,20 @@ import {
 } from "@tanstack/react-table";
 import "./App.css";
 import { EmployeeInputRow } from "./EmployeeInputRow";
-import { deleteEmployeeById } from "./api/employee.api"
+import { fetchEmployees, deleteEmployeeById } from "./api/employee.api"
 
 function App() {
   const [employees, setEmployees] = useState([]);
 
-  const fetchEmployees = async () => {
-    fetch("/api/employees")
-      .then((response) => response.json())
-      .then((employees) => setEmployees(employees));
+  const loadEmployees = async () => {
+    const employees = await fetchEmployees();
+    if (employees) {
+      setEmployees(employees);
+    }
   };
 
   useEffect(() => {
-    fetchEmployees();
+    loadEmployees();
   }, []);
 
   const columns = [
@@ -114,7 +115,7 @@ function App() {
                 </tr>
               ))}
               <EmployeeInputRow
-                fetchEmployees={fetchEmployees}
+                loadEmployees={loadEmployees}
                 table={table}
               ></EmployeeInputRow>
             </tbody>
