@@ -118,11 +118,12 @@ export const EmployeeInputRow = ({ loadEmployees, table }) => {
         </td>
         <td>
           <button
+            className="submit-button"
             onClick={handleSubmit((data) => {
               handleAdd(data);
             })}
           >
-            Submit
+            Add
           </button>
         </td>
       </tr>

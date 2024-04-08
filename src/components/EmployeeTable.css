@@ -8,28 +8,36 @@ table {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-table thead tr {
+thead tr {
   background-color: #009880;
   color: #ffffff;
   font-weight: bold;
 }
 
-table th,
-table td {
+th,
+td {
   padding: 8px 10px;
   vertical-align: top;
 }
 
-table tbody tr {
+/* target the right most td/th in each row */
+th:nth-of-type(9),
+td:nth-of-type(9) {
+  text-align: center;
+  padding-left: 2px;
+  padding-right: 6px;
+}
+
+tbody tr {
   border-bottom: 1px solid #dddddd;
 }
 
-table tbody tr:nth-of-type(even) {
+tbody tr:nth-of-type(even) {
   background-color: #f4f4f4;
 }
 
-table input:not([type='submit']),
-table select {
+input:not([type='submit']),
+select {
   padding: 4px 2px;
 }
 
@@ -42,7 +50,8 @@ table select {
 }
 
 .delete-button:hover {
-  background-color: rgb(255, 6, 6);
-  border: 2px solid rgb(255, 6, 6);
+  background-color: rgb(212, 0, 0);
+  border: 2px solid rgb(212, 0, 0);
   cursor: pointer;
 }
+
