@@ -23,16 +23,16 @@ input[type="number"] {
 }
 
 .submit-button {
-  border-radius: 10%;
-  background-color: #009880;
-  border: 4px solid #009880;
-  color: #ffffff;
   font-weight: bold;
+  border-radius: 4px;
+  padding: 6px 10px;
+  border: 0;
+  background-color: #009880;
+  color: #ffffff;
 }
 
 .submit-button:hover {
   background-color: #00695a;
-  border: 4px solid #00695a;
   cursor: pointer;
 }
 
