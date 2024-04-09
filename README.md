@@ -54,7 +54,7 @@ On the front-end I used Tanstack table for building the table, react-hook-form f
 
 If I was going to put more time into the project, my next priorities would be:
 
-1. Add validation to the API (maybe using Joi)
-2. Add filtering, pagination and ordering to table (need to do more Tanstack research)
-3. Add edit button to each row and make employees editable in-place
+1. Add filtering, pagination and ordering to table (need to do more Tanstack research)
+2. Add edit button to each row and make employees editable in-place
+3. Add validation to the API (maybe using Joi)
 
