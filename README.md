@@ -40,12 +40,21 @@ In general, my process for building the app looked something like this:
   3. Proper client functionality and structure
   4. Add styling
   5. Refactor as needed
+  6. Continue to next API endpoint
 
-I took an iterative approach to building the app. I started with the API for fetching employees, which I testing with the API testing tool Insomnia, before connecting it to the front-end. After starting to build the DELETE and CREATE endpoints, I realized that integrating a database would more easily be done now, rather than after implementing all the methods using an array for storage. So I decided to use a database early in the project.
+I took an iterative approach to building the app. I started with the fetch employees API, which I testing with Insomnia before connecting it to the front-end. After starting to build the DELETE and CREATE endpoints, I realized that integrating a database would more easily be done now, rather than after implementing all the methods using an array for storage. So I decided to integrate a database early in the project.
 
-After doing some research, I decided to use Postgres because it has easy integration with node via a module called pg, and lots of documentation. After more research I figured out how to configure and run the database with a [docker-compose.yml](/docker-compose.yml) file, making it easy for anyone else that might want to test the app.
+After doing some research, I decided to use Postgres because it has easy integration with node via a module name pg, and lots of documentation. After more research I figured out how to configure and run the database with a [docker-compose.yml](/docker-compose.yml) file, making it easy for anyone else that might want to fire up the app.
 
 After getting some basic functionality for adding and deleting employees, I refactored the server into [/controllers](/server/controllers) and [/routes](/server/routes) folders, and moved the methods for setting up the database into [db.js](/server/data/db.js) to better structure the project.
 
-On the front-end I used Tanstack table for building the table, react-hook-form for collecting employee inputs and css for styling. I would have preferred to have employee data be edited in place rather than having a separate row, but settled on this method.
+On the front-end I used Tanstack table for building the table, react-hook-form for collecting employee inputs, and css for styling. I added components to a components folder and extracted all API calls into a separate module called [employee.api.js](/src/api/employee.api.js).
+
+### Next Steps
+
+If I was going to put more time into the project, my next priorities would be:
+
+1. Add validation to the API (maybe using Joi)
+2. Add filtering, pagination and ordering to table (need to do more Tanstack research)
+3. Add edit button to each row and make employees editable in-place
 
