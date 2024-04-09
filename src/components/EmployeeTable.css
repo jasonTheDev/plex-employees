@@ -57,3 +57,14 @@ select {
   cursor: pointer;
 }
 
+.color-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.color-container div {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  margin-top: 2px;
+}

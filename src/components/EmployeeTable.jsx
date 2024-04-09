@@ -29,6 +29,12 @@ export const EmployeeTable = ({ employees, loadEmployees }) => {
     {
       header: "Color",
       accessorKey: "color",
+      cell: ({ row }) => (
+        <div className="color-container">
+          <div style={{ backgroundColor: row.original.color }}></div>
+          {row.original.color}
+        </div>
+      ),
     },
     {
       header: "City",
