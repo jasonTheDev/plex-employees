@@ -44,7 +44,7 @@ In general, my process for building the app looked something like this:
 
 I took an iterative approach to building the app. I started with the fetch employees API, which I testing with Insomnia before connecting it to the front-end. After starting to build the DELETE and CREATE endpoints, I realized that integrating a database would more easily be done now, rather than after implementing all the methods using an array for storage. So I decided to integrate a database early in the project.
 
-After doing some research, I decided to use Postgres because it has easy integration with node via a module name pg, and lots of documentation. After more research I figured out how to configure and run the database with a [docker-compose.yml](/docker-compose.yml) file, making it easy for anyone else that might want to fire up the app.
+After doing some research, I decided to use Postgres because it has easy integration with node via a module named **pg**, and lots of documentation. After more research, I figured out how to configure and run the database with a [docker-compose.yml](/docker-compose.yml) file, making it easy for anyone else that might want to fire up the app.
 
 After getting some basic functionality for adding and deleting employees, I refactored the server into [/controllers](/server/controllers) and [/routes](/server/routes) folders, and moved the methods for setting up the database into [db.js](/server/data/db.js) to better structure the project.
 
@@ -54,7 +54,7 @@ On the front-end I used Tanstack table for building the table, react-hook-form f
 
 If I was going to put more time into the project, my next priorities would be:
 
-1. Add filtering, pagination and ordering to table (need to do more Tanstack research)
-2. Add edit button to each row and make employees editable in-place
+1. Add filtering, pagination and ordering to the table (more Tanstack research)
+2. Add an edit button to each row and make employees editable in-place
 3. Add validation to the API (maybe using Joi)
 
